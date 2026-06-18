@@ -1,45 +1,297 @@
 {
-  "id": "1781817469405879600",
+  "id": "1781818919889612800",
   "job_id": "job-nmap-001",
   "tool": "nmap",
   "target": "example.com",
-  "timestamp": "2026-06-18T21:17:49.4058796Z",
+  "timestamp": "2026-06-18T21:41:59.8896128Z",
   "status": "success",
   "findings": [
     {
       "type": "port",
       "target": "example.com",
-      "ip": "93.184.216.34",
+      "ip": "66.35.250.168",
       "port": 80,
       "protocol": "tcp",
       "state": "open",
       "service": "http",
-      "version": "Apache httpd 2.4.41",
-      "first_seen": "2026-06-18T21:17:49.4058796Z",
-      "last_seen": "2026-06-18T21:17:49.4058796Z",
-      "source": "nmap"
+      "version": "Apache httpd 1.3.39",
+      "hostname": "freshmeat.net",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "os": "MicroTik RouterOS 2.9.46",
+        "scripts": {
+          "HTML title": "freshmeat.net: Welcome to freshmeat.net",
+          "robots.txt": "User-Agent: * /img/ /redir/ "
+        }
+      }
     },
     {
       "type": "port",
       "target": "example.com",
-      "ip": "93.184.216.34",
+      "ip": "66.35.250.168",
+      "port": 443,
+      "protocol": "tcp",
+      "state": "closed",
+      "service": "https",
+      "hostname": "freshmeat.net",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "os": "MicroTik RouterOS 2.9.46"
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "66.35.250.203",
+      "port": 80,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "http",
+      "version": "lighttpd 1.4.18",
+      "hostname": "sourceforge.net",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "os": "Linux 2.6.17 - 2.6.18",
+        "scripts": {
+          "HTML title": "Site doesn't have a title.",
+          "robots.txt": "User-agent: * \n/forum /pm /search /softwaremap /top /tracker /users "
+        }
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "66.35.250.203",
+      "port": 443,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "http",
+      "version": "lighttpd 1.4.18",
+      "hostname": "sourceforge.net",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "os": "Linux 2.6.17 - 2.6.18",
+        "scripts": {
+          "HTML title": "Site doesn't have a title.",
+          "SSLv2": "server still supports SSLv2\n\tSSL2_DES_192_EDE3_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_WITH_MD5\n\tSSL2_RC4_64_WITH_MD5\n\tSSL2_DES_64_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_EXPORT40_WITH_MD5\n"
+        }
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "64.13.134.48",
+      "port": 80,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "http",
+      "version": "Apache httpd 2.2.2",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "os": "Linux 2.6.17 - 2.6.21",
+        "scripts": {
+          "HTML title": "Nmap - Free Security Scanner For Network Exploration \u0026 Securit..."
+        }
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "204.152.191.37",
+      "port": 80,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "http",
+      "version": "Apache httpd 2.2.2",
+      "hostname": "pub2.kernel.org",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "os": "Linux 2.6.5 - 2.6.9",
+        "scripts": {
+          "HTML title": "The Linux Kernel Archives",
+          "robots.txt": "\n/cgi-bin/ /pub/mirrors/ /pub/scm/ \n/mirrors/process-registration.cgi /lsb/ /linuxeda/ /os.org/ /debian/ \n/debian-cd/ /lanana/ /li18nux/ /freestandards/ \n/filehub/ /diff/ /git/ /hg/ "
+        }
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "204.152.191.37",
       "port": 443,
       "protocol": "tcp",
       "state": "open",
       "service": "https",
-      "version": "nginx 1.18.0",
-      "first_seen": "2026-06-18T21:17:49.4058796Z",
-      "last_seen": "2026-06-18T21:17:49.4058796Z",
-      "source": "nmap"
+      "hostname": "pub2.kernel.org",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "os": "Linux 2.6.5 - 2.6.9",
+        "scripts": {
+          "HTML title": "The Linux Kernel Archives"
+        }
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "199.185.137.3",
+      "port": 80,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "http",
+      "version": "Apache httpd",
+      "hostname": "cvs.openbsd.org",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "os": "Netcomm V300 VoIP gateway",
+        "scripts": {
+          "HTML title": "OpenBSD",
+          "robots.txt": "/cgi-bin/ /faq/new/ \n/donations.html "
+        }
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "204.152.190.12",
+      "port": 80,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "http",
+      "version": "Apache httpd 2.0.61",
+      "hostname": "www.netbsd.org",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "os": "Apple AirPort Extreme WAP (runs NetBSD)",
+        "scripts": {
+          "HTML title": "The NetBSD Project"
+        }
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "204.152.190.12",
+      "port": 443,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "http",
+      "version": "Apache httpd 2.0.61",
+      "hostname": "www.netbsd.org",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "os": "Apple AirPort Extreme WAP (runs NetBSD)",
+        "scripts": {
+          "HTML title": "400 Bad Request",
+          "SSLv2": "server still supports SSLv2\n\tSSL2_DES_192_EDE3_CBC_WITH_MD5\n\tSSL2_IDEA_128_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_WITH_MD5\n\tSSL2_DES_64_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_EXPORT40_WITH_MD5\n"
+        }
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "72.14.207.99",
+      "port": 80,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "http",
+      "version": "Google httpd 1.3",
+      "hostname": "eh-in-f99.google.com",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "scripts": {
+          "HTML title": "302 Moved"
+        }
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "72.14.207.99",
+      "port": 443,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "http",
+      "version": "Google httpd 1.3",
+      "hostname": "eh-in-f99.google.com",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "scripts": {
+          "HTML title": "302 Moved",
+          "SSLv2": "server still supports SSLv2\n\tSSL2_DES_192_EDE3_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_WITH_MD5\n\tSSL2_DES_64_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_EXPORT40_WITH_MD5\n"
+        }
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "72.14.253.83",
+      "port": 80,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "http",
+      "version": "Google httpd 1.3",
+      "hostname": "po-in-f83.google.com",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "scripts": {
+          "HTML title": "302 Moved",
+          "robots.txt": "/news?output=xhtml\u0026 /search /groups /images \n/catalogs /catalogues /news /nwshp /? /addurl/image? \n/pagead/ /relpage/ /relcontent /sorry/ /imgres \n/keyword/ /u/ /univ/ /cobrand /custom \n/advanced_group_search /advanced_search /googlesite /preferences \n/setprefs /swr /url /default /m? /m/search? /wml? \n/wml/search? /xhtml? /xhtml/search? /xml? /imode? \n/imode/search? /jsky? /jsky/search? /pda? /pda/search? \n/sprint_xhtml /sprint_wml /pqa /palm /gwt/ /purchases /hws \n/bsd? /linux? /mac? /microsoft? /unclesam? \n/answers/search?q= /local? /local_url /froogle? /products? \n/froogle_ /product_ /products_ /print /books /patents? \n/scholar? /complete /sponsoredlinks /videosearch? \n/videopreview? /videoprograminfo? /maps? /mapstt? /mapslt? \n/translate? /ie? /sms/demo? /katrina? /blogsearch? \n/blogsearch/ /blogsearch_feeds /advanced_blog_search \n/reader/ /uds/ /chart? /transit? /mbd? /extern_js/ \n/calendar/feeds/ /calendar/ical/ /cl2/feeds/ /cl2/ical/ \n/coop/directory /coop/manage /trends? /trends/music? \n/notebook/search? /music /browsersync /call /archivesearch? \n/archivesearch/url /archivesearch/advanced_search \n/base/search? /base/reportbadoffer /base/s2 \n/urchin_test/ /movies? /codesearch? \n/codesearch/feeds/search? /wapsearch? /safebrowsing /reviews/search? \n/orkut/albums /jsapi /views? /c/ /cbk \n/recharge/dashboard/car /recharge/dashboard/static/ /translate_c? \n/s2 /transconsole/portal/ /gcc/ /aclk /cse? \n/tbproxy/ "
+        }
+      }
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "72.14.253.83",
+      "port": 443,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "https",
+      "hostname": "po-in-f83.google.com",
+      "first_seen": "2026-06-18T21:41:59.889016Z",
+      "last_seen": "2026-06-18T21:41:59.8896128Z",
+      "source": "nmap",
+      "extra": {
+        "scripts": {
+          "HTML title": "302 Moved",
+          "SSLv2": "server still supports SSLv2\n\tSSL2_DES_192_EDE3_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_WITH_MD5\n\tSSL2_DES_64_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_EXPORT40_WITH_MD5\n"
+        }
+      }
     }
   ],
   "summary": {
     "total_targets": 1,
-    "total_findings": 2,
+    "total_findings": 14,
     "findings_by_type": {
-      "port": 2
+      "port": 14
     },
     "findings_by_severity": {},
-    "ports_open": 2
+    "ports_open": 13
   }
 }

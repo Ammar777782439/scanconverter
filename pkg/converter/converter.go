@@ -62,8 +62,28 @@ type nmapRun struct {
 }
 
 type nmapHost struct {
-	Addresses []nmapAddress `xml:"address"`
-	Ports     nmapPorts     `xml:"ports"`
+	Addresses   []nmapAddress `xml:"address"`
+	Hostnames   nmapHostnames `xml:"hostnames"`
+	Ports       nmapPorts     `xml:"ports"`
+	HostScripts []nmapScript  `xml:"hostscript>script"`
+	Os          nmapOs        `xml:"os"`
+}
+
+type nmapHostnames struct {
+	Hostnames []nmapHostname `xml:"hostname"`
+}
+
+type nmapHostname struct {
+	Name string `xml:"name,attr"`
+}
+
+type nmapOs struct {
+	OsMatches []nmapOsMatch `xml:"osmatch"`
+}
+
+type nmapOsMatch struct {
+	Name     string `xml:"name,attr"`
+	Accuracy string `xml:"accuracy,attr"`
 }
 
 type nmapAddress struct {
@@ -76,10 +96,16 @@ type nmapPorts struct {
 }
 
 type nmapPort struct {
-	Protocol string      `xml:"protocol,attr"`
-	PortID   int         `xml:"portid,attr"`
-	State    nmapState   `xml:"state"`
-	Service  nmapService `xml:"service"`
+	Protocol string       `xml:"protocol,attr"`
+	PortID   int          `xml:"portid,attr"`
+	State    nmapState    `xml:"state"`
+	Service  nmapService  `xml:"service"`
+	Scripts  []nmapScript `xml:"script"`
+}
+
+type nmapScript struct {
+	ID     string `xml:"id,attr"`
+	Output string `xml:"output,attr"`
 }
 
 type nmapState struct {
@@ -101,23 +127,74 @@ func parseNmapXML(raw []byte, target, jobID string) (*models.ScanResult, error) 
 	r := models.NewScanResult("nmap", target, jobID)
 	for _, host := range run.Hosts {
 		ip := ""
+		mac := ""
 		for _, addr := range host.Addresses {
 			if addr.AddrType == "ipv4" || addr.AddrType == "ipv6" {
 				ip = addr.Addr
-				break
+			} else if addr.AddrType == "mac" {
+				mac = addr.Addr
 			}
 		}
+
+		var hnames []string
+		for _, hn := range host.Hostnames.Hostnames {
+			hnames = append(hnames, hn.Name)
+		}
+		hostnameStr := strings.Join(hnames, ",")
+
+		osName := ""
+		if len(host.Os.OsMatches) > 0 {
+			osName = host.Os.OsMatches[0].Name
+		}
+
 		for _, port := range host.Ports.Ports {
-			r.AddFinding(models.Finding{
+			f := models.Finding{
 				Type:     models.TypePort,
 				Target:   target,
 				IP:       ip,
+				Hostname: hostnameStr,
 				Port:     port.PortID,
 				Protocol: port.Protocol,
 				State:    port.State.State,
 				Service:  port.Service.Name,
 				Version:  strings.TrimSpace(port.Service.Product + " " + port.Service.Version),
-			})
+				Extra:    make(map[string]interface{}),
+			}
+
+			if mac != "" {
+				f.Extra["mac"] = mac
+			}
+			if osName != "" {
+				f.Extra["os"] = osName
+			}
+
+			if len(port.Scripts) > 0 {
+				scriptsMap := make(map[string]string)
+				for _, s := range port.Scripts {
+					scriptsMap[s.ID] = s.Output
+				}
+				f.Extra["scripts"] = scriptsMap
+			}
+
+			r.AddFinding(f)
+		}
+
+		// If there are host scripts (e.g. vulnerability checks running against the host directly)
+		if len(host.HostScripts) > 0 {
+			f := models.Finding{
+				Type:     models.TypeVuln,
+				Target:   target,
+				IP:       ip,
+				Hostname: hostnameStr,
+				Extra:    make(map[string]interface{}),
+			}
+			scriptsMap := make(map[string]string)
+			for _, s := range host.HostScripts {
+				scriptsMap[s.ID] = s.Output
+			}
+			f.Extra["host_scripts"] = scriptsMap
+			f.Name = "Nmap Host Script Result"
+			r.AddFinding(f)
 		}
 	}
 	return r, nil

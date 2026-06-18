@@ -72,7 +72,7 @@ type Finding struct {
 	Service string `json:"service,omitempty"`
 	Version string `json:"version,omitempty"`
 	Banner  string `json:"banner,omitempty"`
-
+    
 	// Vulnerability
 	VulnID     string   `json:"vuln_id,omitempty"`
 	Name       string   `json:"name,omitempty"`
@@ -96,7 +96,7 @@ type Finding struct {
 	OccurrenceCount int       `json:"occurrence_count,omitempty"`
 	Source          string    `json:"source,omitempty"`   // tool name
 	RawLine         string    `json:"raw_line,omitempty"` // original TXT line
-
+   
 	Extra     map[string]interface{} `json:"extra,omitempty"`
 	Extracted map[string]interface{} `json:"extracted,omitempty"`
 }
