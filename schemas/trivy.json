@@ -1,0 +1,19 @@
+{
+ "name": "trivy",
+ "version": "1.0",
+ "format": "json",
+ "finding_type": "vulnerability",
+ "array_path": "Results.#.Vulnerabilities",
+ "fields": [
+ { "name": "vuln_id", "path": "VulnerabilityID", "type": "string" },
+ { "name": "name", "path": "Title", "type": "string" },
+ { "name": "severity", "path": "Severity", "type": "string" },
+ { "name": "version", "path": "InstalledVersion","type": "string" }
+ ],
+ "severity_map": {
+ "CRITICAL": "critical",
+ "HIGH": "high",
+ "MEDIUM": "medium",
+ "LOW": "low"
+ }
+}

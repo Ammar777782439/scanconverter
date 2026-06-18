@@ -1,0 +1,19 @@
+name: "nikto"
+version: "1.0"
+format: "text"
+finding_type: "vulnerability"
+skip_prefixes:
+ - "- Nikto"
+ - "-----------"
+ - "+ Target"
+ - "+ Start"
+ - "+ End"
+line_patterns:
+ - regex: '^\+\s+$$(\d+)$$\s+([^:]+):\s*(.+)$'
+ fields:
+ vuln_id: "1"
+ url: "2"
+ name: "3"
+ - regex: '^\+\s+Server:\s*(.+)$'
+ fields:
+ server: "1"

@@ -1,0 +1,15 @@
+{
+ "name": "amass",
+ "version": "1.0",
+ "format": "jsonl",
+ "finding_type": "subdomain",
+ "fields": [
+ { "name": "hostname", "path": "Name", "type": "string" },
+ { "name": "source", "path": "Tag", "type": "string" }
+ ],
+ "nested_objects": {
+ "Addresses": [
+ { "name": "ip", "path": "IP", "type": "string" }
+ ]
+ }
+}

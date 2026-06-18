@@ -1,0 +1,20 @@
+{
+ "name": "httpx",
+ "version": "1.0",
+ "format": "jsonl",
+ "finding_type": "service",
+ "fields": [
+ { "name": "url", "path": "url", "type": "string" },
+ { "name": "hostname", "path": "host", "type": "string" },
+ { "name": "ip", "path": "ip", "type": "string" },
+ { "name": "status_code", "path": "status-code", "type": "int" },
+ { "name": "title", "path": "title", "type": "string" },
+ { "name": "server", "path": "webserver", "type": "string" },
+ { "name": "content_length", "path": "content-length", "type": "int" }
+ ],
+ "nested_objects": {
+ "tls": [
+ { "name": "tls_subject", "path": "subject_cn", "type": "string" }
+ ]
+ }
+}

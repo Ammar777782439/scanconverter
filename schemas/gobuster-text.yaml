@@ -1,0 +1,24 @@
+name: "gobuster"
+version: "1.0"
+format: "text"
+finding_type: "path"
+skip_prefixes:
+ - "="
+ - "Gobuster"
+ - "Error"
+ - "/"
+ - "["
+line_patterns:
+ - regex: '^(/\S+)\s+$Status:\s*(\d+)$\s+\[Size:\s*(\d+)
+$$'
+ fields:
+ url: "1"
+ status_code: "2"
+ content_length: "3"
+ - regex: '^(/\S+)\s+$Status:\s*(\d+)$'
+ fields:
+ url: "1"
+ status_code: "2"
+ - regex: '^(/\S+)$'
+ fields:
+ url: "1"

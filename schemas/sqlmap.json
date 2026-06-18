@@ -1,0 +1,16 @@
+{
+ "name": "sqlmap",
+ "version": "1.0",
+ "format": "json",
+ "finding_type": "vulnerability",
+ "fields": [
+ { "name": "url", "path": "url", "type": "string" },
+ { "name": "name", "path": "parameter", "type": "string" },
+ { "name": "evidence", "path": "payload", "type": "string" }
+ ],
+ "nested_objects": {
+ "data": [
+ { "name": "vuln_id", "path": "type", "type": "string" }
+ ]
+ }
+}

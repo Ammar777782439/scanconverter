@@ -1,0 +1,13 @@
+{
+ "name": "wpscan",
+ "version": "1.0",
+ "format": "json",
+ "finding_type": "vulnerability",
+ "array_path": "vulnerabilities",
+ "fields": [
+ { "name": "vuln_id", "path": "id", "type": "string" },
+ { "name": "name", "path": "title", "type": "string" },
+ { "name": "severity", "path": "severity", "type": "string" },
+ { "name": "cvss_score","path": "cvss.score","type": "float" }
+ ]
+}

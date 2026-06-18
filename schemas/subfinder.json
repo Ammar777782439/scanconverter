@@ -1,0 +1,11 @@
+{
+ "name": "subfinder",
+ "version": "1.0",
+ "format": "jsonl",
+ "finding_type": "subdomain",
+ "fields": [
+ { "name": "hostname", "path": "host", "type": "string" },
+ { "name": "ip", "path": "ip", "type": "string" },
+ { "name": "source", "path": "source", "type": "string" }
+ ]
+}

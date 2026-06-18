@@ -1,0 +1,32 @@
+{
+ "name": "nuclei",
+ "version": "1.0",
+ "format": "jsonl",
+ "finding_type": "vulnerability",
+ "description": "nuclei -json JSONL output",
+ "fields": [
+ { "name": "vuln_id", "path": "template-id", "type": "string" },
+ { "name": "matched", "path": "matched-at", "type": "string" },
+ { "name": "ip", "path": "ip", "type": "string" },
+ { "name": "hostname", "path": "host", "type": "string" }
+ ],
+ "nested_objects": {
+ "info": [
+ { "name": "name", "path": "name", "type": "string" },
+ { "name": "severity", "path": "severity", "type": "string" },
+ { "name": "cvss_score", "path": "cvss-score", "type": "float" },
+ { "name": "tags", "path": "tags", "type": "array" },
+ { "name": "references", "path": "reference", "type": "array" }
+ ],
+ "info.classification": [
+ { "name": "cwe", "path": "cwe-id", "type": "array" }
+ ]
+ },
+ "severity_map": {
+ "critical": "critical",
+ "high": "high",
+ "medium": "medium",
+ "low": "low",
+ "info": "info"
+ }
+}

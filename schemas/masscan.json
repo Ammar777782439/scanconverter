@@ -1,0 +1,15 @@
+{
+ "name": "masscan",
+ "version": "1.0",
+ "format": "json",
+ "finding_type": "port",
+ "description": "masscan -oJ output: array of {ip, timestamp, ports[]}",
+ "array_path": "ports",
+ "fields": [
+ { "name": "port", "path": "port", "type": "int" },
+ { "name": "protocol", "path": "proto", "type": "string" },
+ { "name": "state", "path": "status", "type": "string" },
+ { "name": "banner", "path": "reason", "type": "string" }
+ ],
+ "severity_map": {}
+}

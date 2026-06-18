@@ -1,0 +1,10 @@
+name: "whatweb"
+version: "1.0"
+format: "text"
+finding_type: "service"
+line_patterns:
+ - regex: '^(https?://\S+)\s+$$(\d+)[^$$]*\]\s+(.+)$'
+ fields:
+ url: "1"
+ status_code: "2"
+ name: "3"

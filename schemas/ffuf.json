@@ -1,0 +1,14 @@
+{
+ "name": "ffuf",
+ "version": "1.0",
+ "format": "json",
+ "finding_type": "path",
+ "array_path": "results",
+ "fields": [
+ { "name": "url", "path": "url", "type": "string" },
+ { "name": "status_code", "path": "status", "type": "int" },
+ { "name": "content_length", "path": "length", "type": "int" },
+ { "name": "method", "path": "method", "type": "string" },
+ { "name": "redirectlocation","path": "redirectlocation","type": "string" }
+ ]
+}

@@ -1,0 +1,8 @@
+{
+ "name": "nmap",
+ "version": "1.0",
+ "format": "xml",
+ "finding_type": "port",
+ "preprocessors": ["xml_to_json"],
+ "description": "nmap -oX XML output — parsed by dedicated parseNmapXML [2]"
+}
