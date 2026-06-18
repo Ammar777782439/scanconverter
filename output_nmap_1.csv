@@ -1,0 +1,1 @@
+type,target,ip,port,url,status_code,severity,vuln_id,name,cvss,hostname,source

@@ -1,0 +1,14 @@
+{
+ "id": "1781817213676185400",
+ "job_id": "demo-job",
+ "tool": "nuclei",
+ "target": "example-target.com",
+ "timestamp": "2026-06-18T21:13:33.6761854Z",
+ "status": "success",
+ "summary": {
+  "total_targets": 1,
+  "total_findings": 0,
+  "findings_by_type": {},
+  "findings_by_severity": {}
+ }
+}

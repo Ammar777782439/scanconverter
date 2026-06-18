@@ -190,7 +190,7 @@ type ScanResult struct {
 
 	Findings  []Finding    `json:"findings,omitempty"`
 	Summary   *ScanSummary `json:"summary,omitempty"`
-	RawOutput []byte       `json:"raw_output,omitempty"`
+	RawOutput string       `json:"raw_output,omitempty"`
 
 	// Advanced fields (v2)
 	Pipeline string                 `json:"pipeline,omitempty"`

@@ -1,4 +1,4 @@
-// Command example demonstrates the full scanconverter pipeline.
+// Command example demonstrates the full scanconverter library.
 package main
 
 import (
@@ -18,7 +18,6 @@ import (
 	"github.com/Ammar777782439/scanconverter/pkg/filter"
 	"github.com/Ammar777782439/scanconverter/pkg/metrics"
 	"github.com/Ammar777782439/scanconverter/pkg/models"
-	"github.com/Ammar777782439/scanconverter/pkg/pipeline"
 	"github.com/Ammar777782439/scanconverter/pkg/schema"
 )
 
@@ -52,66 +51,47 @@ func main() {
 		cache.WithTTL(5*time.Minute),
 	)
 
-	// ─── 5. DAG Pipeline: masscan → httpx → nuclei ────────────────────────────
-	dag := pipeline.NewDAG("recon-pipeline", reg, logger).
-		AddStep("masscan", pipeline.Step{
-			Tool:    "masscan",
-			Command: []string{"masscan", "-iL", "targets.txt", "-p80,443,8080,8443", "-oJ", "/tmp/masscan.json"},
-			Outputs: []string{"/tmp/masscan.json"},
-			Timeout: 30 * time.Minute,
-			Retries: 1,
-		}).
-		AddStep("httpx", pipeline.Step{
-			Tool:      "httpx",
-			Command:   []string{"httpx", "-l", "/tmp/ports.txt", "-json", "-o", "/tmp/httpx.jsonl"},
-			DependsOn: []string{"masscan"},
-			Outputs:   []string{"/tmp/httpx.jsonl"},
-			Timeout:   20 * time.Minute,
-		}).
-		AddStep("nuclei", pipeline.Step{
-			Tool:      "nuclei",
-			Command:   []string{"nuclei", "-l", "/tmp/urls.txt", "-json", "-o", "/tmp/nuclei.jsonl", "-severity", "medium,high,critical"},
-			DependsOn: []string{"httpx"},
-			Outputs:   []string{"/tmp/nuclei.jsonl"},
-			Timeout:   60 * time.Minute,
-			Retries:   2,
-		})
-
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Hour)
-	defer cancel()
-
-	pipelineResults, err := dag.Execute(ctx)
-	if err != nil {
-		logger.Error("pipeline error", zap.Error(err))
-	}
-	logger.Info("pipeline complete", zap.Int("step_results", len(pipelineResults)))
-
-	// ─── 6. Also parse local files for demo purposes ──────────────────────────
+	// ─── 5. Parse local scan files ────────────────────────────────────────────
 	var allResults []*models.ScanResult
 
-	// Parse a local nuclei output file if present
-	if raw, err := os.ReadFile("./testdata/nuclei_sample.jsonl"); err == nil {
-		start := time.Now()
-		result, err := conv.Convert("nuclei", raw, "example.com", "demo-job")
-		metrics.ParseDuration.WithLabelValues("nuclei").Observe(time.Since(start).Seconds())
-		if err != nil {
-			logger.Warn("nuclei parse warning", zap.Error(err))
-		}
-		for _, f := range result.Findings {
-			metrics.FindingsTotal.WithLabelValues("nuclei", string(f.Severity)).Inc()
-		}
-		allResults = append(allResults, result)
+	// Define which files to parse: (tool_name, file_path)
+	scanFiles := []struct {
+		Tool string
+		File string
+	}{
+		{"nuclei", "real_nuclei.jsonl"},
+		{"nmap", "real_nmap.xml"},
 	}
 
-	// Append pipeline results
-	allResults = append(allResults, pipelineResults...)
+	for _, sf := range scanFiles {
+		raw, err := os.ReadFile(sf.File)
+		if err != nil {
+			logger.Warn("file not found, skipping", zap.String("tool", sf.Tool), zap.String("file", sf.File))
+			continue
+		}
+		start := time.Now()
+		result, err := conv.Convert(sf.Tool, raw, "example-target.com", "demo-job")
+		metrics.ParseDuration.WithLabelValues(sf.Tool).Observe(time.Since(start).Seconds())
+		if err != nil {
+			logger.Warn("parse warning", zap.String("tool", sf.Tool), zap.Error(err))
+			continue
+		}
+		for _, f := range result.Findings {
+			metrics.FindingsTotal.WithLabelValues(sf.Tool, string(f.Severity)).Inc()
+		}
+		logger.Info("parsed file",
+			zap.String("tool", sf.Tool),
+			zap.Int("findings", len(result.Findings)),
+		)
+		allResults = append(allResults, result)
+	}
 
 	if len(allResults) == 0 {
 		logger.Warn("no results to process; exiting demo")
 		return
 	}
 
-	// ─── 7. Deduplication ─────────────────────────────────────────────────────
+	// ─── 6. Deduplication ─────────────────────────────────────────────────────
 	deduplicator := dedup.NewDeduplicator(dedup.DefaultConfig())
 	var dedupedResults []*models.ScanResult
 	for _, r := range allResults {
@@ -128,7 +108,10 @@ func main() {
 		metrics.DeduplicationRate.Set(rate)
 	}
 
-	// ─── 8. Enrichment ────────────────────────────────────────────────────────
+	// ─── 7. Enrichment ────────────────────────────────────────────────────────
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
 	enrichPipeline := enrich.NewPipeline(logger).
 		Add(enrich.CVEEnricher(enrich.DefaultCVEConfig(), logger)).
 		Add(enrich.GeoIPEnricher(logger)).
@@ -138,8 +121,7 @@ func main() {
 		enrichPipeline.Enrich(ctx, r)
 	}
 
-	// ─── 9. Filtering with expression language ────────────────────────────────
-	// Keep only high/critical vulns with CVSS ≥ 7.0, excluding test/demo hosts.
+	// ─── 8. Filtering with expression language ────────────────────────────────
 	chain, err := filter.FromConfig(filter.FilterConfig{
 		Severities:  []string{"high", "critical"},
 		MinCVSS:     7.0,
@@ -163,7 +145,7 @@ func main() {
 	filterStats := chain.Stats()
 	logger.Info("filter complete", zap.Any("stats", filterStats))
 
-	// ─── 10. Export to SARIF + JSON + CSV ─────────────────────────────────────
+	// ─── 9. Export to SARIF + JSON + CSV ──────────────────────────────────────
 	sarifExporter := export.NewSARIFExporter()
 
 	// SARIF 2.1.0
@@ -203,15 +185,14 @@ func main() {
 		}
 	}
 
-	// ─── 11. Cache results ────────────────────────────────────────────────────
+	// ─── 10. Cache results ────────────────────────────────────────────────────
 	for _, r := range filteredResults {
 		mlCache.Set(r.ID, r)
 	}
 
-	// ─── 12. Summary ──────────────────────────────────────────────────────────
+	// ─── 11. Summary ──────────────────────────────────────────────────────────
 	metrics.RegisterAll()
 	fmt.Println("\n=== Summary ===")
-	fmt.Printf("Pipeline steps completed: %d\n", len(pipelineResults))
 	fmt.Printf("Dedup: %d in → %d out (%d duplicates)\n",
 		dedupStats.TotalIn, dedupStats.TotalOut, dedupStats.Duplicates)
 	fmt.Printf("Filter rejections: %+v\n", filterStats.RuleRejections)
