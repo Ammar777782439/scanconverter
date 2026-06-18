@@ -8,7 +8,9 @@ import (
 	"os"
 
 	"github.com/Ammar777782439/scanconverter/pkg/converter"
+	"github.com/Ammar777782439/scanconverter/pkg/discovery"
 	"github.com/Ammar777782439/scanconverter/pkg/export"
+	"github.com/Ammar777782439/scanconverter/pkg/models"
 	"github.com/Ammar777782439/scanconverter/pkg/schema"
 )
 
@@ -16,11 +18,12 @@ func main() {
 	htmlOut := flag.String("html", "", "Output path for the Premium HTML Report")
 	flag.Parse()
 
-	inputFile := "./rich_nmap.xml"
-	if flag.NArg() > 0 {
-		inputFile = flag.Arg(0)
+	files := flag.Args()
+	if len(files) == 0 {
+		files = []string{"./rich_nmap.xml"}
 	}
-	// 1) Load schemas
+
+	// 1) Load schemas & init engines
 	reg := schema.NewRegistry(nil)
 	if err := reg.LoadDir("./schemas"); err != nil {
 		log.Fatal("load schemas:", err)
@@ -28,22 +31,49 @@ func main() {
 
 	conv := converter.NewConverter(reg)
 
-	// 2) Read input file
-	raw, err := os.ReadFile(inputFile)
-	if err != nil {
-		log.Fatalf("read file %s: %v", inputFile, err)
+	var schemas []*schema.ToolSchema
+	for _, name := range reg.ListNames() {
+		if s, ok := reg.Get(name); ok {
+			schemas = append(schemas, s)
+		}
+	}
+	discEngine := discovery.New(schemas)
+
+	// Master result to combine all findings
+	masterResult := models.NewScanResult("combined", "multiple", "job-all")
+
+	// Process all files
+	for _, inputFile := range files {
+		raw, err := os.ReadFile(inputFile)
+		if err != nil {
+			log.Printf("[-] Failed to read %s: %v", inputFile, err)
+			continue
+		}
+
+		// Auto-discover the tool
+		discRes, err := discEngine.Discover(raw, "")
+		if err != nil || discRes.OverallConfidence < 10 {
+			log.Printf("[-] Could not identify tool for %s", inputFile)
+			continue
+		}
+		toolName := discRes.DetectedTool
+
+		// We assume the toolName matches a schema
+		res, err := conv.Convert(toolName, raw, "auto-target", "job-auto")
+		if err != nil {
+			// fallback to just parsing by format if we have no schema
+			log.Printf("[-] Convert error for %s: %v", inputFile, err)
+			continue
+		}
+
+		masterResult.Findings = append(masterResult.Findings, res.Findings...)
+		fmt.Printf("[+] Processed %s (Tool: %s, Findings: %d)\n", inputFile, toolName, len(res.Findings))
 	}
 
-	// 3) Convert without any filter
-	res, err := conv.Convert("nmap", raw, "example.com", "job-nmap-001")
-	if err != nil {
-		log.Println("convert warning:", err)
-	}
-
-	fmt.Printf("=== Total Results: %d findings ===\n\n", len(res.Findings))
+	masterResult.BuildSummary()
 
 	// 4) Print each result with its details
-	for i, f := range res.Findings {
+	for i, f := range masterResult.Findings {
 		fmt.Printf("[%d] ─────────────────────────────────────\n", i+1)
 		fmt.Printf("  Type      : %s\n", f.Type)
 		fmt.Printf("  IP        : %s\n", f.IP)
@@ -86,19 +116,19 @@ func main() {
 	}
 
 	// 5) Print summary
-	if res.Summary != nil {
+	if masterResult.Summary != nil {
 		fmt.Printf("\n=== Summary ===\n")
-		fmt.Printf("  Total Targets : %d\n", res.Summary.TotalTargets)
-		fmt.Printf("  Total Findings: %d\n", res.Summary.TotalFindings)
-		fmt.Printf("  Open Ports    : %d\n", res.Summary.PortsOpen)
-		fmt.Printf("  Vulnerabilities: %d\n", res.Summary.Vulnerabilities)
-		fmt.Printf("  Findings By Type: %v\n", res.Summary.FindingsByType)
+		fmt.Printf("  Total Targets : %d\n", masterResult.Summary.TotalTargets)
+		fmt.Printf("  Total Findings: %d\n", masterResult.Summary.TotalFindings)
+		fmt.Printf("  Open Ports    : %d\n", masterResult.Summary.PortsOpen)
+		fmt.Printf("  Vulnerabilities: %d\n", masterResult.Summary.Vulnerabilities)
+		fmt.Printf("  Findings By Type: %v\n", masterResult.Summary.FindingsByType)
 	}
 
 	// 6) Export HTML Report if requested
 	if *htmlOut != "" {
 		htmlExporter := export.NewHTMLExporter()
-		htmlBytes, err := htmlExporter.Export(res)
+		htmlBytes, err := htmlExporter.Export(masterResult)
 		if err != nil {
 			log.Printf("Failed to generate HTML report: %v", err)
 		} else {
@@ -108,7 +138,7 @@ func main() {
 	}
 
 	// 7) Save all as JSON
-	out, _ := json.MarshalIndent(res, "", "  ")
-	_ = os.WriteFile("nmap_all.json", out, 0644)
-	fmt.Println("\n[+] Saved all results to: nmap_all.json")
+	out, _ := json.MarshalIndent(masterResult, "", "  ")
+	_ = os.WriteFile("combined_all.json", out, 0644)
+	fmt.Println("\n[+] Saved all results to: combined_all.json")
 }

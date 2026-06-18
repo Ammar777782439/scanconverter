@@ -1,0 +1,61 @@
+{
+  "id": "1781823161280162700",
+  "job_id": "job-all",
+  "tool": "combined",
+  "target": "multiple",
+  "timestamp": "2026-06-18T22:52:41.2801627Z",
+  "status": "success",
+  "findings": [
+    {
+      "type": "vulnerability",
+      "target": "auto-target",
+      "url": "https://target.com/beyondtrust/api/v1/auth/login?returnUrl=%22%3E%3Cscript%3Ealert(document.domain)%3C/script%3E",
+      "vuln_id": "CVE-2021-31589",
+      "name": "BeyondTrust U-Series Appliance - Cross-Site Scripting",
+      "severity": "medium",
+      "matched": "https://target.com/beyondtrust/api/v1/auth/login?returnUrl=%22%3E%3Cscript%3Ealert(document.domain)%3C/script%3E",
+      "hostname": "https://target.com",
+      "first_seen": "2026-06-18T22:52:41.2908276Z",
+      "last_seen": "2026-06-18T22:52:41.2908276Z",
+      "source": "nuclei"
+    },
+    {
+      "type": "vulnerability",
+      "target": "auto-target",
+      "url": "https://target.com",
+      "vuln_id": "nginx-version",
+      "name": "Nginx Version Detect",
+      "severity": "info",
+      "matched": "https://target.com",
+      "hostname": "https://target.com",
+      "first_seen": "2026-06-18T22:52:41.2908276Z",
+      "last_seen": "2026-06-18T22:52:41.2908276Z",
+      "source": "nuclei"
+    },
+    {
+      "type": "vulnerability",
+      "target": "auto-target",
+      "url": "https://example.com/login",
+      "vuln_id": "boolean-based blind",
+      "name": "username",
+      "first_seen": "2026-06-18T22:52:41.2975183Z",
+      "last_seen": "2026-06-18T22:52:41.2975183Z",
+      "source": "sqlmap",
+      "extra": {
+        "evidence": "' OR '1'='1"
+      }
+    }
+  ],
+  "summary": {
+    "total_targets": 1,
+    "total_findings": 3,
+    "findings_by_type": {
+      "vulnerability": 3
+    },
+    "findings_by_severity": {
+      "info": 1,
+      "medium": 1
+    },
+    "vulnerabilities": 3
+  }
+}
