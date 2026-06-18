@@ -10,6 +10,7 @@ import (
 	"os"
 
 	"github.com/Ammar777782439/scanconverter/pkg/discovery"
+	"github.com/Ammar777782439/scanconverter/pkg/schema"
 )
 
 func main() {
@@ -29,8 +30,20 @@ func main() {
 		log.Fatalf("read file: %v", err)
 	}
 
+	// Load existing schemas for dynamic tool detection
+	reg := schema.NewRegistry(nil)
+	if err := reg.LoadDir("schemas"); err != nil {
+		log.Printf("warning: could not load schemas: %v", err)
+	}
+	var schemas []*schema.ToolSchema
+	for _, name := range reg.ListNames() {
+		if s, ok := reg.Get(name); ok {
+			schemas = append(schemas, s)
+		}
+	}
+
 	// Run the Auto-Discovery engine
-	engine := discovery.New()
+	engine := discovery.New(schemas)
 	result, err := engine.Discover(raw, *toolHint)
 	if err != nil {
 		log.Fatalf("discovery failed: %v", err)

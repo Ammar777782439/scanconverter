@@ -4,5 +4,10 @@
  "format": "xml",
  "finding_type": "port",
  "preprocessors": ["xml_to_json"],
- "description": "nmap -oX XML output — parsed by dedicated parseNmapXML [2]"
+ "description": "nmap -oX XML output — parsed by dedicated parseNmapXML [2]",
+ "filters": {
+   "expressions": [
+     "port == 80 || port == 443"
+   ]
+ }
 }

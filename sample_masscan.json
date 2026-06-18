@@ -1,0 +1,2 @@
+[{"ip":"192.168.1.1","timestamp":"1687000000","ports":[{"port":80,"proto":"tcp","status":"open","reason":"syn-ack"},{"port":443,"proto":"tcp","status":"open","reason":"syn-ack"}]},
+{"ip":"192.168.1.5","timestamp":"1687000001","ports":[{"port":22,"proto":"tcp","status":"open","reason":"syn-ack"},{"port":3306,"proto":"tcp","status":"open","reason":"syn-ack"}]}]

@@ -1,0 +1,4 @@
+{"host":"www.example.com","ip":"93.184.216.34","source":["DNS","CertificateTransparency"]}
+{"host":"api.example.com","ip":"93.184.216.35","source":["DNS"]}
+{"host":"mail.example.com","ip":"93.184.216.36","source":["BruteForce","DNS"]}
+{"host":"dev.example.com","ip":"93.184.216.37","source":["CertificateTransparency"]}

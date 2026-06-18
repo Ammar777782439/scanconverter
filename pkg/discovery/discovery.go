@@ -140,10 +140,13 @@ type DiscoveryResult struct {
 // ─── Engine ───────────────────────────────────────────────────────────────────
 
 // Engine is the Auto-Discovery engine.
-type Engine struct{}
+type Engine struct{
+	schemas []*schema.ToolSchema
+}
 
 // New creates a new Auto-Discovery Engine.
-func New() *Engine { return &Engine{} }
+// It accepts a list of known schemas to use for dynamic tool detection.
+func New(schemas []*schema.ToolSchema) *Engine { return &Engine{schemas: schemas} }
 
 // Discover analyzes raw tool output and returns a DiscoveryResult.
 // The toolNameHint is optional — if provided, it overrides auto-detection.
@@ -169,7 +172,7 @@ func (e *Engine) Discover(raw []byte, toolNameHint string) (*DiscoveryResult, er
 	detectedTool := toolNameHint
 	detectedType := "vulnerability" // default
 	if detectedTool == "" {
-		detectedTool, detectedType = detectTool(keys)
+		detectedTool, detectedType = e.detectTool(keys)
 	}
 
 	// 4. Map keys → unified fields
@@ -346,7 +349,7 @@ func mapKeys(m map[string]interface{}) []string {
 
 // ─── Tool detection ───────────────────────────────────────────────────────────
 
-func detectTool(keys []string) (toolName string, findingType string) {
+func (e *Engine) detectTool(keys []string) (toolName string, findingType string) {
 	keySet := map[string]bool{}
 	for _, k := range keys {
 		// Use only the last segment for signature matching
@@ -356,17 +359,31 @@ func detectTool(keys []string) (toolName string, findingType string) {
 	}
 
 	bestScore := 0
-	for _, sig := range knownToolSignatures {
+	
+	// Dynamic detection: score against all provided schemas
+	for _, sch := range e.schemas {
 		score := 0
-		for _, required := range sig.Keys {
-			if keySet[required] {
+		requiredKeys := 0
+		
+		for _, field := range sch.Fields {
+			if field.Required {
+				requiredKeys++
+			}
+			
+			// Check both the full path and the last segment
+			parts := strings.Split(field.Path, ".")
+			lastSeg := parts[len(parts)-1]
+			
+			if keySet[field.Path] || keySet[lastSeg] {
 				score++
 			}
 		}
-		if score > bestScore {
+
+		// Tool must match at least 2 keys or all required keys to be considered
+		if score > bestScore && (score >= 2 || (requiredKeys > 0 && score >= requiredKeys)) {
 			bestScore = score
-			toolName = sig.Tool
-			findingType = sig.Type
+			toolName = sch.Name
+			findingType = sch.FindingType
 		}
 	}
 

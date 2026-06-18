@@ -16,6 +16,7 @@ import (
 
 	"github.com/Ammar777782439/scanconverter/pkg/models"
 	"github.com/Ammar777782439/scanconverter/pkg/schema"
+	"github.com/Ammar777782439/scanconverter/pkg/filter"
 )
 
 // --- Preprocessors ---
@@ -230,7 +231,18 @@ func NewConverter(reg *schema.Registry, opts ...Option) *Converter {
 func (c *Converter) Convert(tool string, raw []byte, target, jobID string) (*models.ScanResult, error) {
 	// Special case: nmap XML
 	if tool == "nmap" {
-		return parseNmapXML(raw, target, jobID)
+		r, err := parseNmapXML(raw, target, jobID)
+		if r != nil {
+			// Apply Schema Filters if present
+			if nmapSch, ok := c.registry.Get("nmap"); ok && nmapSch.Filters != nil && len(nmapSch.Filters.Expressions) > 0 {
+				chain := filter.NewFilterChain()
+				for _, exprStr := range nmapSch.Filters.Expressions {
+					chain.AddExpressionRule(exprStr)
+				}
+				r = chain.Apply(r)
+			}
+		}
+		return r, err
 	}
 
 	sch, ok := c.registry.Get(tool)
@@ -263,6 +275,16 @@ func (c *Converter) Convert(tool string, raw []byte, target, jobID string) (*mod
 			}
 		}
 		r.BuildSummary()
+
+		// Apply Schema Filters if present
+		if sch != nil && sch.Filters != nil && len(sch.Filters.Expressions) > 0 {
+			chain := filter.NewFilterChain()
+			for _, exprStr := range sch.Filters.Expressions {
+				chain.AddExpressionRule(exprStr)
+			}
+			filtered := chain.Apply(r)
+			r = filtered
+		}
 	}
 	return r, err
 }

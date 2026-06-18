@@ -1,0 +1,3 @@
+[{"url":"https://example.com","host":"example.com","ip":"93.184.216.34","status-code":200,"title":"Example Domain","webserver":"Apache/2.4.41","content-length":1256,"tls":{"subject_cn":"example.com"}},
+{"url":"https://api.example.com/v1","host":"api.example.com","ip":"93.184.216.35","status-code":401,"title":"Unauthorized","webserver":"nginx/1.18.0","content-length":27},
+{"url":"https://admin.example.com","host":"admin.example.com","ip":"93.184.216.36","status-code":200,"title":"Admin Panel","webserver":"Apache/2.4.51","content-length":8942}]

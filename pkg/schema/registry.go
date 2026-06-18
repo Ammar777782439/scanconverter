@@ -47,6 +47,11 @@ type ValidationRules struct {
  AllowEmpty bool `json:"allow_empty,omitempty" yaml:"allow_empty,omitempty"`
 }
 
+// SchemaFilters defines auto-applied filters for a tool.
+type SchemaFilters struct {
+	Expressions []string `json:"expressions,omitempty" yaml:"expressions,omitempty"`
+}
+
 // ToolSchema defines how a tool's output maps to the unified Finding model.
 type ToolSchema struct {
  Name string `json:"name" yaml:"name"`
@@ -75,6 +80,9 @@ type ToolSchema struct {
 
  // Validation
  Validation *ValidationRules `json:"validation,omitempty" yaml:"validation,omitempty"`
+
+ // Auto-applied filters
+ Filters *SchemaFilters `json:"filters,omitempty" yaml:"filters,omitempty"`
 }
 
 // Validate checks that required schema fields are present.
@@ -146,6 +154,17 @@ func (r *Registry) Get(name string) (*ToolSchema, bool) {
  r.stats[name].LastUsed = time.Now().UTC()
  }
  return s, ok
+}
+
+// ListNames returns a list of all registered schema names.
+func (r *Registry) ListNames() []string {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	names := make([]string, 0, len(r.schemas))
+	for name := range r.schemas {
+		names = append(names, name)
+	}
+	return names
 }
 
 // LoadFile loads a single JSON or YAML schema file.

@@ -1,0 +1,1 @@
+{"url":"https://example.com/login","parameter":"username","payload":"' OR '1'='1","data":{"type":"boolean-based blind","title":"AND boolean-based blind - WHERE or HAVING clause"},"dbms":"MySQL","os":"Linux"}

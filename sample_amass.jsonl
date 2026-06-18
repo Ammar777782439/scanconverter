@@ -1,0 +1,2 @@
+{"Name":"www.example.com","Domain":"example.com","Addresses":[{"IP":"93.184.216.34","Netblock":"93.184.0.0/16","ASN":15133,"Description":"MCI Communications Services"}],"Tag":"cert","Source":"CertSpotter"}
+{"Name":"api.example.com","Domain":"example.com","Addresses":[{"IP":"93.184.216.35","Netblock":"93.184.0.0/16","ASN":15133}],"Tag":"dns","Source":"DNS"}
