@@ -14,6 +14,10 @@
 
 It is designed to be the central "Brain" for your security workflows. While you use various tools to scan your targets, **ScanConverter** takes those raw, unstructured files, understands them, filters out the noise, enriches the data, and unifies them into a single, perfectly structured JSON format ready to be consumed by your Frontend UI or Database.
 
+### 🌟 Premium HTML Report Exporter
+Transform your raw scans into stunning, interactive, standalone HTML reports out-of-the-box. Dark mode, Glassmorphism, and Chart.js analytics included.
+![Premium HTML Report Preview](./report_preview.png)
+
 ## 📑 Table of Contents
 - [Core Capabilities](#-core-capabilities)
 - [Supported Tools](#-supported-tools-out-of-the-box)
