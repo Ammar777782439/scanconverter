@@ -1,9 +1,9 @@
 {
-  "id": "1781819119078781100",
+  "id": "1781820997653325600",
   "job_id": "job-nmap-001",
   "tool": "nmap",
   "target": "example.com",
-  "timestamp": "2026-06-18T21:45:19.0787811Z",
+  "timestamp": "2026-06-18T22:16:37.6533256Z",
   "status": "success",
   "findings": [
     {
@@ -16,8 +16,8 @@
       "service": "http",
       "version": "Apache httpd 1.3.39",
       "hostname": "freshmeat.net",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "os": "MicroTik RouterOS 2.9.46",
@@ -36,8 +36,8 @@
       "state": "closed",
       "service": "https",
       "hostname": "freshmeat.net",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "os": "MicroTik RouterOS 2.9.46"
@@ -53,8 +53,8 @@
       "service": "http",
       "version": "lighttpd 1.4.18",
       "hostname": "sourceforge.net",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "os": "Linux 2.6.17 - 2.6.18",
@@ -74,8 +74,8 @@
       "service": "http",
       "version": "lighttpd 1.4.18",
       "hostname": "sourceforge.net",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "os": "Linux 2.6.17 - 2.6.18",
@@ -88,91 +88,14 @@
     {
       "type": "port",
       "target": "example.com",
-      "ip": "66.35.250.203",
-      "port": 563,
-      "protocol": "tcp",
-      "state": "closed",
-      "service": "snews",
-      "hostname": "sourceforge.net",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.17 - 2.6.18"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "64.13.134.48",
-      "port": 22,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "ssh",
-      "version": "OpenSSH 4.3",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.17 - 2.6.21"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "64.13.134.48",
-      "port": 25,
-      "protocol": "tcp",
-      "state": "closed",
-      "service": "smtp",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.17 - 2.6.21"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "64.13.134.48",
-      "port": 53,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "domain",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.17 - 2.6.21"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "64.13.134.48",
-      "port": 70,
-      "protocol": "tcp",
-      "state": "closed",
-      "service": "gopher",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.17 - 2.6.21"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
       "ip": "64.13.134.48",
       "port": 80,
       "protocol": "tcp",
       "state": "open",
       "service": "http",
       "version": "Apache httpd 2.2.2",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "os": "Linux 2.6.17 - 2.6.21",
@@ -184,74 +107,6 @@
     {
       "type": "port",
       "target": "example.com",
-      "ip": "64.13.134.48",
-      "port": 113,
-      "protocol": "tcp",
-      "state": "closed",
-      "service": "auth",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.17 - 2.6.21"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.191.37",
-      "port": 21,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "ftp",
-      "version": "vsftpd or WU-FTPD",
-      "hostname": "pub2.kernel.org",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.5 - 2.6.9",
-        "scripts": {
-          "Anonymous FTP": "FTP: Anonymous login allowed"
-        }
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.191.37",
-      "port": 22,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "ssh",
-      "version": "OpenSSH 4.3",
-      "hostname": "pub2.kernel.org",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.5 - 2.6.9"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.191.37",
-      "port": 79,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "finger",
-      "hostname": "pub2.kernel.org",
-      "first_seen": "2026-06-18T21:45:19.0787811Z",
-      "last_seen": "2026-06-18T21:45:19.0787811Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.5 - 2.6.9"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
       "ip": "204.152.191.37",
       "port": 80,
       "protocol": "tcp",
@@ -259,8 +114,8 @@
       "service": "http",
       "version": "Apache httpd 2.2.2",
       "hostname": "pub2.kernel.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "os": "Linux 2.6.5 - 2.6.9",
@@ -274,156 +129,18 @@
       "type": "port",
       "target": "example.com",
       "ip": "204.152.191.37",
-      "port": 199,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "smux",
-      "version": "Linux SNMP multiplexer",
-      "hostname": "pub2.kernel.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.5 - 2.6.9"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.191.37",
       "port": 443,
       "protocol": "tcp",
       "state": "open",
       "service": "https",
       "hostname": "pub2.kernel.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "os": "Linux 2.6.5 - 2.6.9",
         "scripts": {
           "HTML title": "The Linux Kernel Archives"
-        }
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.191.37",
-      "port": 873,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "rsync",
-      "hostname": "pub2.kernel.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.5 - 2.6.9"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.191.37",
-      "port": 1720,
-      "protocol": "tcp",
-      "state": "filtered",
-      "service": "H.323/Q.931",
-      "hostname": "pub2.kernel.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.5 - 2.6.9"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.191.37",
-      "port": 5978,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "ncd-diag-tcp",
-      "hostname": "pub2.kernel.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.5 - 2.6.9"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.191.37",
-      "port": 7000,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "afs3-fileserver",
-      "hostname": "pub2.kernel.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Linux 2.6.5 - 2.6.9"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "199.185.137.3",
-      "port": 21,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "ftp",
-      "version": "bsd-ftpd",
-      "hostname": "cvs.openbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Netcomm V300 VoIP gateway"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "199.185.137.3",
-      "port": 25,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "smtp",
-      "version": "OpenBSD spamd",
-      "hostname": "cvs.openbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Netcomm V300 VoIP gateway",
-        "scripts": {
-          "SMTP": "EHLO with errors or timeout.  Enable --script-trace to see what is happening."
-        }
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "199.185.137.3",
-      "port": 53,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "domain",
-      "version": "ISC BIND 9.X",
-      "hostname": "cvs.openbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Netcomm V300 VoIP gateway",
-        "scripts": {
-          "zone-transfer": " \nopenbsd.org.                  SOA     zeus.theos.com. root.theos.com.  \nopenbsd.org.                  NS      ns.appli.se.                     \nopenbsd.org.                  NS      ns\tsigmasoft.com.                \nopenbsd.org.                  NS      cvs.openbsd.org.                 \nopenbsd.org.                  NS      citi.umich.edu.                  \nopenbsd.org.                  NS      zeus.theos.com.                  \nopenbsd.org.                  A       199.185.137.3                    \nopenbsd.org.                  MX      shear.ucar.edu.                  \nopenbsd.org.                  MX      cvs.openbsd.org.                 \nalpha.openbsd.org.            A       199.185.137.77                   \namd64.openbsd.org.            A       199.185.137.80                   \nanoncvs.openbsd.org.          CNAME  \nftp.ar.openbsd.org.           CNAME  \nftp1.ar.openbsd.org.          CNAME  \nwww.ar.openbsd.org.           CNAME  \narmish.openbsd.org.           A       199.185.137.155                  \nftp.as.openbsd.org.           CNAME  \nftp1.as.openbsd.org.          CNAME  \nftp2.as.openbsd.org.          CNAME  \nftp3.as.openbsd.org.          CNAME  \nftp4.as.openbsd.org.          CNAME  \nanoncvs2.at.openbsd.org.      A       128.130.59.60                    \nwww.at.openbsd.org.           CNAME  \nftp.au.openbsd.org.           CNAME  \nftp1.au.openbsd.org.          CNAME  \nftp2.au.openbsd.org.          CNAME  \nftp3.au.openbsd.org.          CNAME  \nwww.au.openbsd.org.           CNAME  \ncvsup.bg.openbsd.org.         A       217.10.246.146                   \nftp.bg.openbsd.org.           A       217.10.246.146                   \nftp1.bg.openbsd.org.          A       217.10.246.146                   \nc.openbsd.org.                CNAME  \nanoncvs.ca.openbsd.org.       CNAME  \nanoncvs1.ca.openbsd.org.      CNAME  \nctm.ca.openbsd.org.           CNAME  \ncvsup.ca.openbsd.org.         A       206.51.28.249                    \nftp.ca.openbsd.org.           CNAME  \nftp1.ca.openbsd.org.          CNAME  \nwww.ca.openbsd.org.           A       129.128.5.191                    \ncats.openbsd.org.             A       199.185.137.33                   \nctm.openbsd.org.              CNAME  \ncvs.openbsd.org.              A       199.185.137.3                    \ncvsup.openbsd.org.            CNAME  \nde.openbsd.org.               NS      a.ns.bsws.de.                    \nde.openbsd.org.               NS      a.ns\tpestilenz.org.              \nde.openbsd.org.               NS      b.ns.bsws.de.                    \nde.openbsd.org.               NS      c.ns.bsws.de.                    \nftp.eu.openbsd.org.           CNAME  \nftp1.eu.openbsd.org.          CNAME  \nftp2.eu.openbsd.org.          CNAME  \nftp3.eu.openbsd.org.          CNAME  \nftp4.eu.openbsd.org.          CNAME  \nftp5.eu.openbsd.org.          CNAME  \nftp6.eu.openbsd.org.          CNAME  \nftp8.eu.openbsd.org.          CNAME  \nftp9.eu.openbsd.org.          A       193.120.14.244                   \ncvsup.fr.openbsd.org.         CNAME  \nftp.fr.openbsd.org.           CNAME  \nftp1.fr.openbsd.org.          CNAME  \nftp2.fr.openbsd.org.          CNAME  \nftp3.fr.openbsd.org.          CNAME  \nftp.openbsd.org.              CNAME  \ngw.openbsd.org.               A       199.185.230.1                    \nhp3...openbsd.org.            A       199.185.137.74                   \nhppa.openbsd.org.             A       199.185.137.79                   \nhttps.openbsd.org.            A       68.148.128.241                   \ncvsup.hu.openbsd.org.         CNAME  \ni386.openbsd.org.             A       199.185.137.8                    \ncvsup.id.openbsd.org.         CNAME  \nftp.ie.openbsd.org.           A       193.120.14.244                   \nftp19.ie.openbsd.org.         A       193.120.14.244                   \nwww.ie.openbsd.org.           A       193.120.14.244                   \nanoncvs.jp.openbsd.org.       CNAME  \nanoncvs1.jp.openbsd.org.      CNAME  \ncvsup.jp.openbsd.org.         CNAME  \nftp.jp.openbsd.org.           CNAME  \nftp1.jp.openbsd.org.          CNAME  \nftp2.jp.openbsd.org.          CNAME  \nwww.jp.openbsd.org.           CNAME  \ncvsup.kr.openbsd.org.         CNAME  \nftp.kr.openbsd.org.           CNAME  \nftp1.kr.openbsd.org.          CNAME  \nlandisk.openbsd.org.          A       199.185.137.81                   \nlandiskx.openbsd.org.         A       199.185.137.157                  \nlist.openbsd.org.             CNAME  \nlists.openbsd.org.            CNAME  \nlocalhost.openbsd.org.        A       127.0.0.1                        \nloghost.openbsd.org.          CNAME  \nmacppc.openbsd.org.           A       199.185.137.87                   \nmail.openbsd.org.             CNAME  \nmusic.openbsd.org.            A       199.185.137.230                  \nmvme68k.openbsd.org.          A       199.185.137.42                   \nmvme88k.openbsd.org.          A       199.185.137.88                   \nn.openbsd.org.                A       199.185.136.200                  \nn.openbsd.org.                MX      cvs.openbsd.org.                 \nanoncvs.nl.openbsd.org.       CNAME  \nanoncvs1.nl.openbsd.org.      CNAME  \nanoncvs.no.openbsd.org.       CNAME  \nanoncvs1.no.openbsd.org.      CNAME  \ncvsup.no.openbsd.org.         CNAME  \nanoncvs.nyc.openbsd.org.      CNAME  \nftp.nyc.openbsd.org.          CNAME  \nops.openbsd.org.              A       199.185.137.129                  \npf.openbsd.org.               A       199.185.136.128                  \npf.openbsd.org.               A       199.185.137.128                  \npf.openbsd.org.               A       199.185.231.128                  \npf.openbsd.org.               A       207.153.1.26                     \nanoncvs.pl.openbsd.org.       CNAME  \nanoncvs1.pl.openbsd.org.      CNAME  \npmax.openbsd.org.             A       199.185.137.52                   \nports.openbsd.org.            CNAME  \nalpha.ports.openbsd.org.      A       199.185.231.77                   \namd64.ports.openbsd.org.      A       199.185.231.80                   \narmish.ports.openbsd.org.     A       199.185.231.155                  \ncvs.ports.openbsd.org.        CNAME  \nhppa.ports.openbsd.org.       A       199.185.231.78                   \ni386.ports.openbsd.org.       A       199.185.231.6                    \nlandisk.ports.openbsd.org.    A       199.185.231.81                   \nm68k.ports.openbsd.org.       A       199.185.231.7                    \nmacppc.ports.openbsd.org.     A       199.185.231.8                    \nserial.ports.openbsd.org.     A       199.185.231.111                  \nsgi.ports.openbsd.org.        A       199.185.231.99                   \nsparc.ports.openbsd.org.      A       199.185.231.5                    \nsparc-..ports.openbsd.org.    CNAME  \nsparc-1.ports.openbsd.org.    A       199.185.231.20                   \nsparc-2.ports.openbsd.org.    A       199.185.231.21                   \nsparc-3.ports.openbsd.org.    A       199.185.231.22                   \nsparc64.ports.openbsd.org.    A       199.185.231.94                   \nsparc64-..ports.openbsd.org.  CNAME  \nsparc64-1.ports.openbsd.org.  A       199.185.231.95                   \nsparc64-2.ports.openbsd.org.  A       199.185.231.96                   \nsparc64-3.ports.openbsd.org.  A       199.185.231.97                   \nsparc64-4.ports.openbsd.org.  A       199.185.231.98                   \nvax.ports.openbsd.org.        A       199.185.231.79                   \nzaurus.ports.openbsd.org.     A       199.185.231.50                   \ncvsup.pt.openbsd.org.         CNAME  \nftp.ro.openbsd.org.           CNAME  \nftp1.ro.openbsd.org.          CNAME  \nanoncvs.se.openbsd.org.       CNAME  \nanoncvs1.se.openbsd.org.      CNAME  \nctm.se.openbsd.org.           CNAME  \nftp.se.openbsd.org.           CNAME  \nftp1.se.openbsd.org.          CNAME  \nserial.openbsd.org.           A       199.185.137.111                  \nsgi.openbsd.org.              A       199.185.137.99                   \nsparc.openbsd.org.            A       199.185.137.92                   \nsparc64.openbsd.org.          A       199.185.137.94                   \ntest.openbsd.org.             A       199.185.137.17                   \ntest2.openbsd.org.            A       199.185.137.18                   \ntest3.openbsd.org.            A       199.185.137.19                   \ntest4.openbsd.org.            A       199.185.137.20                   \nftp.th.openbsd.org.           CNAME  \nftp1.th.openbsd.org.          CNAME  \nwww.tr.openbsd.org.           CNAME  \nanoncvs.tw.openbsd.org.       CNAME  \nanoncvs1.tw.openbsd.org.      CNAME  \ncvsup.tw.openbsd.org.         A       140.113.17.208                   \nftp.tw.openbsd.org.           CNAME  \nftp1.tw.openbsd.org.          CNAME  \nwww.tw.openbsd.org.           CNAME  \nu.openbsd.org.                A       199.185.136.4                    \nu.openbsd.org.                MX      cvs.openbsd.org.                 \ncvsup.uk.openbsd.org.         A       194.242.139.171                  \nanoncvs.usa.openbsd.org.      CNAME  \nanoncvs1.usa.openbsd.org.     CNAME  \nanoncvs2.usa.openbsd.org.     CNAME  \nanoncvs3.usa.openbsd.org.     CNAME  \nanoncvs4.usa.openbsd.org.     CNAME  \nanoncvs5.usa.openbsd.org.     CNAME  \nanoncvs6.usa.openbsd.org.     CNAME  \ncvsup.usa.openbsd.org.        A       128.46.156.46                    \nftp.usa.openbsd.org.          CNAME  \nftp1.usa.openbsd.org.         CNAME  \nftp2.usa.openbsd.org.         CNAME  \nftp3.usa.openbsd.org.         CNAME  \nftp5.usa.openbsd.org.         CNAME  \nftp6.usa.openbsd.org.         CNAME  \nwww.usa.openbsd.org.          A       198.175.14.3                     \nv.openbsd.org.                A       199.185.136.2                    \nv.openbsd.org.                MX      cvs.openbsd.org.                 \nvax.openbsd.org.              A       199.185.137.78                   \nw.openbsd.org.                A       199.185.136.3                    \nw.openbsd.org.                MX      cvs.openbsd.org.                 \nwww.openbsd.org.              A       129.128.5.191                    \nx.openbsd.org.                A       199.185.136.5                    \nx.openbsd.org.                MX      cvs.openbsd.org.                 \nzaurus.openbsd.org.           A       199.185.137.50                   \nzeus.openbsd.org.             CNAME  \nopenbsd.org.                  SOA     zeus.theos.com. root.theos.com.  \n"
         }
       }
     },
@@ -437,67 +154,14 @@
       "service": "http",
       "version": "Apache httpd",
       "hostname": "cvs.openbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "os": "Netcomm V300 VoIP gateway",
         "scripts": {
           "HTML title": "OpenBSD",
           "robots.txt": "/cgi-bin/ /faq/new/ \n/donations.html "
-        }
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "199.185.137.3",
-      "port": 7326,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "icb",
-      "hostname": "cvs.openbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Netcomm V300 VoIP gateway"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.190.12",
-      "port": 22,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "ssh",
-      "version": "OpenSSH 4.4",
-      "hostname": "www.netbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Apple AirPort Extreme WAP (runs NetBSD)"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.190.12",
-      "port": 25,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "smtp",
-      "version": "Postfix smtpd",
-      "hostname": "www.netbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Apple AirPort Extreme WAP (runs NetBSD)",
-        "scripts": {
-          "SMTP": "HELP with errors or timeout.  Enable --script-trace to see what is happening."
         }
       }
     },
@@ -511,8 +175,8 @@
       "service": "http",
       "version": "Apache httpd 2.0.61",
       "hostname": "www.netbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "os": "Apple AirPort Extreme WAP (runs NetBSD)",
@@ -531,8 +195,8 @@
       "service": "http",
       "version": "Apache httpd 2.0.61",
       "hostname": "www.netbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "os": "Apple AirPort Extreme WAP (runs NetBSD)",
@@ -545,87 +209,6 @@
     {
       "type": "port",
       "target": "example.com",
-      "ip": "204.152.190.12",
-      "port": 871,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "supfilesrv",
-      "hostname": "www.netbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Apple AirPort Extreme WAP (runs NetBSD)"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.190.12",
-      "port": 874,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "rsync",
-      "hostname": "www.netbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Apple AirPort Extreme WAP (runs NetBSD)"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.190.12",
-      "port": 1720,
-      "protocol": "tcp",
-      "state": "filtered",
-      "service": "H.323/Q.931",
-      "hostname": "www.netbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Apple AirPort Extreme WAP (runs NetBSD)"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.190.12",
-      "port": 1984,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "tcpwrapped",
-      "hostname": "www.netbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Apple AirPort Extreme WAP (runs NetBSD)"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "204.152.190.12",
-      "port": 2022,
-      "protocol": "tcp",
-      "state": "open",
-      "service": "ssh",
-      "version": "OpenSSH 4.4",
-      "hostname": "www.netbsd.org",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap",
-      "extra": {
-        "os": "Apple AirPort Extreme WAP (runs NetBSD)"
-      }
-    },
-    {
-      "type": "port",
-      "target": "example.com",
       "ip": "72.14.207.99",
       "port": 80,
       "protocol": "tcp",
@@ -633,8 +216,8 @@
       "service": "http",
       "version": "Google httpd 1.3",
       "hostname": "eh-in-f99.google.com",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "scripts": {
@@ -646,40 +229,14 @@
       "type": "port",
       "target": "example.com",
       "ip": "72.14.207.99",
-      "port": 113,
-      "protocol": "tcp",
-      "state": "closed",
-      "service": "auth",
-      "hostname": "eh-in-f99.google.com",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap"
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "72.14.207.99",
-      "port": 179,
-      "protocol": "tcp",
-      "state": "closed",
-      "service": "bgp",
-      "hostname": "eh-in-f99.google.com",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap"
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "72.14.207.99",
       "port": 443,
       "protocol": "tcp",
       "state": "open",
       "service": "http",
       "version": "Google httpd 1.3",
       "hostname": "eh-in-f99.google.com",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "scripts": {
@@ -698,8 +255,8 @@
       "service": "http",
       "version": "Google httpd 1.3",
       "hostname": "po-in-f83.google.com",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "scripts": {
@@ -712,39 +269,13 @@
       "type": "port",
       "target": "example.com",
       "ip": "72.14.253.83",
-      "port": 113,
-      "protocol": "tcp",
-      "state": "closed",
-      "service": "auth",
-      "hostname": "po-in-f83.google.com",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap"
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "72.14.253.83",
-      "port": 179,
-      "protocol": "tcp",
-      "state": "closed",
-      "service": "bgp",
-      "hostname": "po-in-f83.google.com",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
-      "source": "nmap"
-    },
-    {
-      "type": "port",
-      "target": "example.com",
-      "ip": "72.14.253.83",
       "port": 443,
       "protocol": "tcp",
       "state": "open",
       "service": "https",
       "hostname": "po-in-f83.google.com",
-      "first_seen": "2026-06-18T21:45:19.0800793Z",
-      "last_seen": "2026-06-18T21:45:19.0800793Z",
+      "first_seen": "2026-06-18T22:16:37.6533256Z",
+      "last_seen": "2026-06-18T22:16:37.6533256Z",
       "source": "nmap",
       "extra": {
         "scripts": {
@@ -753,5 +284,14 @@
         }
       }
     }
-  ]
+  ],
+  "summary": {
+    "total_targets": 1,
+    "total_findings": 14,
+    "findings_by_type": {
+      "port": 14
+    },
+    "findings_by_severity": {},
+    "ports_open": 13
+  }
 }

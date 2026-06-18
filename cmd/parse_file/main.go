@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	// 1) تحميل السكيمات
+	// 1) Load schemas
 	reg := schema.NewRegistry(nil)
 	if err := reg.LoadDir("./schemas"); err != nil {
 		log.Fatal("load schemas:", err)
@@ -19,41 +19,41 @@ func main() {
 
 	conv := converter.NewConverter(reg)
 
-	// 2) قراءة ملف Nmap
+	// 2) Read Nmap file
 	raw, err := os.ReadFile("./rich_nmap.xml")
 	if err != nil {
 		log.Fatal("read rich_nmap.xml:", err)
 	}
 
-	// 3) تحويل بدون أي فلترة
+	// 3) Convert without any filter
 	res, err := conv.Convert("nmap", raw, "example.com", "job-nmap-001")
 	if err != nil {
 		log.Println("convert warning:", err)
 	}
 
-	fmt.Printf("=== إجمالي النتائج: %d findings ===\n\n", len(res.Findings))
+	fmt.Printf("=== Total Results: %d findings ===\n\n", len(res.Findings))
 
-	// 4) طباعة كل نتيجة بتفاصيلها
+	// 4) Print each result with its details
 	for i, f := range res.Findings {
 		fmt.Printf("[%d] ─────────────────────────────────────\n", i+1)
-		fmt.Printf("  النوع     : %s\n", f.Type)
-		fmt.Printf("  الـ IP    : %s\n", f.IP)
-		fmt.Printf("  الـ Hostname: %s\n", f.Hostname)
+		fmt.Printf("  Type      : %s\n", f.Type)
+		fmt.Printf("  IP        : %s\n", f.IP)
+		fmt.Printf("  Hostname  : %s\n", f.Hostname)
 		if f.Port != 0 {
-			fmt.Printf("  البورت   : %d/%s  state=%s\n", f.Port, f.Protocol, f.State)
-			fmt.Printf("  الخدمة   : %s  (%s)\n", f.Service, f.Version)
+			fmt.Printf("  Port      : %d/%s  state=%s\n", f.Port, f.Protocol, f.State)
+			fmt.Printf("  Service   : %s  (%s)\n", f.Service, f.Version)
 		}
 		if f.Name != "" {
-			fmt.Printf("  الاسم    : %s\n", f.Name)
+			fmt.Printf("  Name      : %s\n", f.Name)
 		}
 		if os_val, ok := f.Extra["os"]; ok {
-			fmt.Printf("  نظام التشغيل: %s\n", os_val)
+			fmt.Printf("  OS        : %s\n", os_val)
 		}
 		if scripts, ok := f.Extra["scripts"]; ok {
-			fmt.Printf("  السكربتات:\n")
+			fmt.Printf("  Scripts   :\n")
 			if sm, ok := scripts.(map[string]string); ok {
 				for name, output := range sm {
-					// نقصر الـ output لأول 80 حرف إذا كانت طويلة
+					// Trim output to first 80 characters
 					out := output
 					if len(out) > 80 {
 						out = out[:80] + "..."
@@ -76,18 +76,18 @@ func main() {
 		}
 	}
 
-	// 5) طباعة الملخص
+	// 5) Print summary
 	if res.Summary != nil {
-		fmt.Printf("\n=== الملخص ===\n")
-		fmt.Printf("  إجمالي الأهداف : %d\n", res.Summary.TotalTargets)
-		fmt.Printf("  إجمالي النتائج : %d\n", res.Summary.TotalFindings)
-		fmt.Printf("  المنافذ المفتوحة: %d\n", res.Summary.PortsOpen)
-		fmt.Printf("  الثغرات        : %d\n", res.Summary.Vulnerabilities)
-		fmt.Printf("  التصنيف حسب النوع: %v\n", res.Summary.FindingsByType)
+		fmt.Printf("\n=== Summary ===\n")
+		fmt.Printf("  Total Targets : %d\n", res.Summary.TotalTargets)
+		fmt.Printf("  Total Findings: %d\n", res.Summary.TotalFindings)
+		fmt.Printf("  Open Ports    : %d\n", res.Summary.PortsOpen)
+		fmt.Printf("  Vulnerabilities: %d\n", res.Summary.Vulnerabilities)
+		fmt.Printf("  Findings By Type: %v\n", res.Summary.FindingsByType)
 	}
 
-	// 6) حفظ الكل كـ JSON
+	// 6) Save all as JSON
 	out, _ := json.MarshalIndent(res, "", "  ")
 	_ = os.WriteFile("nmap_all.json", out, 0644)
-	fmt.Println("\n✅ تم حفظ كل النتائج في: nmap_all.json")
+	fmt.Println("\n[+] Saved all results to: nmap_all.json")
 }

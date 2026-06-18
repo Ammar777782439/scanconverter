@@ -53,13 +53,13 @@ func main() {
 	fmt.Println("╔══════════════════════════════════════════════════════╗")
 	fmt.Println("║          Auto-Discovery Engine — Results             ║")
 	fmt.Println("╚══════════════════════════════════════════════════════╝")
-	fmt.Printf("\n🔍 الأداة المكتشفة  : %s\n", result.DetectedTool)
-	fmt.Printf("📄 الصيغة           : %s\n", result.DetectedFormat)
-	fmt.Printf("🎯 الثقة الإجمالية  : %.0f%%\n\n", float64(result.OverallConfidence))
+	fmt.Printf("\n🔍 Detected Tool    : %s\n", result.DetectedTool)
+	fmt.Printf("📄 Format           : %s\n", result.DetectedFormat)
+	fmt.Printf("🎯 Overall Confidence: %.0f%%\n\n", float64(result.OverallConfidence))
 
 	// ─── Field mappings ───────────────────────────────────────────────────────
 	fmt.Println("┌─────────────────────────┬───────────────────┬────────────┬──────────────────────────────┐")
-	fmt.Printf("│ %-23s │ %-17s │ %-10s │ %-28s │\n", "مفتاح الأداة الأصلي", "حقل المكتبة", "الثقة", "قيمة مثال")
+	fmt.Printf("│ %-23s │ %-17s │ %-10s │ %-28s │\n", "Original Tool Key", "Library Field", "Confidence", "Sample Value")
 	fmt.Println("├─────────────────────────┼───────────────────┼────────────┼──────────────────────────────┤")
 
 	for _, df := range result.DiscoveredFields {
@@ -79,7 +79,7 @@ func main() {
 
 	// ─── Unmapped keys ────────────────────────────────────────────────────────
 	if len(result.UnmappedKeys) > 0 {
-		fmt.Printf("\n⚠️  مفاتيح لم يتم تعيينها (%d):\n", len(result.UnmappedKeys))
+		fmt.Printf("\n⚠️  Unmapped Keys (%d):\n", len(result.UnmappedKeys))
 		for _, k := range result.UnmappedKeys {
 			fmt.Printf("   • %s\n", k)
 		}
@@ -87,14 +87,14 @@ func main() {
 
 	// ─── Warnings ─────────────────────────────────────────────────────────────
 	if len(result.Warnings) > 0 {
-		fmt.Println("\n⚠️  تحذيرات:")
+		fmt.Println("\n⚠️  Warnings:")
 		for _, w := range result.Warnings {
 			fmt.Printf("   • %s\n", w)
 		}
 	}
 
 	// ─── Generated Schema ─────────────────────────────────────────────────────
-	fmt.Println("\n📋 الـ Schema المولّدة تلقائياً:")
+	fmt.Println("\n📋 Auto-Generated Schema:")
 	schemaBytes, _ := json.MarshalIndent(result.Schema, "", "  ")
 	fmt.Println(string(schemaBytes))
 
@@ -102,13 +102,13 @@ func main() {
 	if *save && result.Schema != nil {
 		fname := fmt.Sprintf("schemas/%s.json", result.Schema.Name)
 		if err := os.WriteFile(fname, schemaBytes, 0644); err != nil {
-			log.Printf("⚠️  فشل حفظ الـ Schema: %v", err)
+			log.Printf("⚠️  Failed to save Schema: %v", err)
 		} else {
-			fmt.Printf("\n✅ تم حفظ الـ Schema في: %s\n", fname)
+			fmt.Printf("\n✅ Saved Schema to: %s\n", fname)
 		}
 	}
 
-	fmt.Printf("\n💡 نصيحة: إذا أردت حفظ الـ Schema أضف -save للأمر\n")
+	fmt.Printf("\n💡 Tip: Add -save flag to save the generated Schema\n")
 }
 
 func truncate(s string, max int) string {
