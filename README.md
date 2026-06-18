@@ -9,24 +9,23 @@
 
 **ScanConverter** is a highly dynamic, schema-driven data normalization, filtering, and auto-discovery engine. 
 
-It is designed to be the "Brain" that sits right after your scanning muscle (like **Axiom**). While frameworks like Axiom distribute scans across fleets of instances to generate thousands of raw result files (from Nmap, Nuclei, Httpx, Subfinder, etc.), **ScanConverter** takes those raw, unstructured files, understands them, filters out the noise, and unifies them into a single, perfectly structured JSON format ready to be consumed by your Frontend UI or Database.
+It is designed to be the central "Brain" for your security workflows. While you use various tools (Nmap, Nuclei, Httpx, Subfinder, etc.) to scan your targets, **ScanConverter** takes those raw, unstructured files, understands them, filters out the noise, and unifies them into a single, perfectly structured JSON format ready to be consumed by your Frontend UI or Database.
 
 ## ✨ Core Features
 
 *   🧠 **Auto-Discovery Engine**: Don't have a schema for a new tool? Just pass the raw output file. The built-in AI-like engine will automatically detect the tool, map the fields, calculate confidence scores, and generate a ready-to-use Schema file for you.
 *   🛠️ **Zero-Code Tool Integration**: Support a new security tool entirely through a JSON/YAML schema file. No need to recompile or write new Go code.
 *   🎯 **Schema-Based Filtering**: Write dynamic expressions directly in your schemas (e.g., `"port == 80 || port == 443"` or `"severity in ['high', 'critical']"`). ScanConverter will automatically filter the output behind the scenes.
-*   🔗 **Axiom-Ready**: The perfect companion for Axiom pipelines. Scan fast with Axiom, process smart with ScanConverter.
 *   🧹 **Smart Deduplication**: Merges overlapping findings from different tools into a single, enriched finding.
 
 ---
 
-## 🏗️ How it Fits into Your Workflow (Axiom Example)
+## 🏗️ How it Fits into Your Workflow
 
 ```mermaid
 graph LR
-    A[Axiom Controller] -->|axiom-scan -m httpx| B(httpx_raw.json)
-    A -->|axiom-scan -m nuclei| C(nuclei_raw.json)
+    A[Security Tools] -->|Run httpx| B(httpx_raw.json)
+    A -->|Run nuclei| C(nuclei_raw.json)
     
     B --> D{ScanConverter}
     C --> D
@@ -90,8 +89,8 @@ func main() {
 	// 2. Initialize the converter
 	conv := converter.NewConverter(reg)
 
-	// 3. Read your raw tool output (e.g., from Axiom)
-	raw, _ := os.ReadFile("axiom_nuclei_results.json")
+	// 3. Read your raw tool output
+	raw, _ := os.ReadFile("raw_nuclei_results.json")
 
 	// 4. Convert, Normalize, and Filter automatically
 	result, err := conv.Convert("nuclei", raw, "example.com", "job-123")
