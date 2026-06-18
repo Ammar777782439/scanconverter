@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScanConverter Premium Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #38bdf8;
+            --critical: #ef4444;
+            --high: #f97316;
+            --medium: #eab308;
+            --low: #3b82f6;
+            --info: #22c55e;
+            --glow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(239, 68, 68, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-item p {
+            margin: 0.5rem 0 0 0;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Table Styles */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 12px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Badges */
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.critical { background: rgba(239, 68, 68, 0.2); color: var(--critical); border: 1px solid var(--critical); }
+        .badge.high { background: rgba(249, 115, 22, 0.2); color: var(--high); border: 1px solid var(--high); }
+        .badge.medium { background: rgba(234, 179, 8, 0.2); color: var(--medium); border: 1px solid var(--medium); }
+        .badge.low { background: rgba(59, 130, 246, 0.2); color: var(--low); border: 1px solid var(--low); }
+        .badge.info { background: rgba(34, 197, 94, 0.2); color: var(--info); border: 1px solid var(--info); }
+        .badge.unknown { background: rgba(148, 163, 184, 0.2); color: var(--text-secondary); border: 1px solid var(--text-secondary); }
+
+        /* Search Bar */
+        .search-wrapper {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .search-input {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 1rem;
+            width: 300px;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>ScanConverter Analytics</h1>
+        <p>Premium Penetration Testing Report</p>
+    </div>
+
+    <!-- KPI Stats -->
+    <div class="stats-grid">
+        <div class="glass-card stat-item">
+            <h3>Targets</h3>
+            <p>1</p>
+        </div>
+        <div class="glass-card stat-item">
+            <h3>Total Findings</h3>
+            <p>14</p>
+        </div>
+        <div class="glass-card stat-item">
+            <h3>Open Ports</h3>
+            <p>13</p>
+        </div>
+        <div class="glass-card stat-item">
+            <h3>Vulnerabilities</h3>
+            <p style="color: var(--critical)">0</p>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3 style="text-align: center; color: var(--text-secondary);">Severity Distribution</h3>
+            <div class="chart-wrapper">
+                <canvas id="severityChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3 style="text-align: center; color: var(--text-secondary);">Finding Types</h3>
+            <div class="chart-wrapper">
+                <canvas id="typeChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Findings Table -->
+    <div class="glass-card table-container">
+        <div class="search-wrapper">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search findings..." onkeyup="filterTable()">
+        </div>
+        <table id="findingsTable">
+            <thead>
+                <tr>
+                    <th>Severity</th>
+                    <th>Type</th>
+                    <th>Target (IP/URL)</th>
+                    <th>Port/Proto</th>
+                    <th>Name / Service</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Populated by JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        const rawFindings = [{"type":"port","target":"example.com","ip":"66.35.250.168","port":80,"protocol":"tcp","state":"open","service":"http","version":"Apache httpd 1.3.39","hostname":"freshmeat.net","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"os":"MicroTik RouterOS 2.9.46","scripts":{"HTML title":"freshmeat.net: Welcome to freshmeat.net","robots.txt":"User-Agent: * /img/ /redir/ "}}},{"type":"port","target":"example.com","ip":"66.35.250.168","port":443,"protocol":"tcp","state":"closed","service":"https","hostname":"freshmeat.net","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"os":"MicroTik RouterOS 2.9.46"}},{"type":"port","target":"example.com","ip":"66.35.250.203","port":80,"protocol":"tcp","state":"open","service":"http","version":"lighttpd 1.4.18","hostname":"sourceforge.net","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"os":"Linux 2.6.17 - 2.6.18","scripts":{"HTML title":"Site doesn't have a title.","robots.txt":"User-agent: * \n/forum /pm /search /softwaremap /top /tracker /users "}}},{"type":"port","target":"example.com","ip":"66.35.250.203","port":443,"protocol":"tcp","state":"open","service":"http","version":"lighttpd 1.4.18","hostname":"sourceforge.net","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"os":"Linux 2.6.17 - 2.6.18","scripts":{"HTML title":"Site doesn't have a title.","SSLv2":"server still supports SSLv2\n\tSSL2_DES_192_EDE3_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_WITH_MD5\n\tSSL2_RC4_64_WITH_MD5\n\tSSL2_DES_64_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_EXPORT40_WITH_MD5\n"}}},{"type":"port","target":"example.com","ip":"64.13.134.48","port":80,"protocol":"tcp","state":"open","service":"http","version":"Apache httpd 2.2.2","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"os":"Linux 2.6.17 - 2.6.21","scripts":{"HTML title":"Nmap - Free Security Scanner For Network Exploration \u0026 Securit..."}}},{"type":"port","target":"example.com","ip":"204.152.191.37","port":80,"protocol":"tcp","state":"open","service":"http","version":"Apache httpd 2.2.2","hostname":"pub2.kernel.org","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"os":"Linux 2.6.5 - 2.6.9","scripts":{"HTML title":"The Linux Kernel Archives","robots.txt":"\n/cgi-bin/ /pub/mirrors/ /pub/scm/ \n/mirrors/process-registration.cgi /lsb/ /linuxeda/ /os.org/ /debian/ \n/debian-cd/ /lanana/ /li18nux/ /freestandards/ \n/filehub/ /diff/ /git/ /hg/ "}}},{"type":"port","target":"example.com","ip":"204.152.191.37","port":443,"protocol":"tcp","state":"open","service":"https","hostname":"pub2.kernel.org","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"os":"Linux 2.6.5 - 2.6.9","scripts":{"HTML title":"The Linux Kernel Archives"}}},{"type":"port","target":"example.com","ip":"199.185.137.3","port":80,"protocol":"tcp","state":"open","service":"http","version":"Apache httpd","hostname":"cvs.openbsd.org","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"os":"Netcomm V300 VoIP gateway","scripts":{"HTML title":"OpenBSD","robots.txt":"/cgi-bin/ /faq/new/ \n/donations.html "}}},{"type":"port","target":"example.com","ip":"204.152.190.12","port":80,"protocol":"tcp","state":"open","service":"http","version":"Apache httpd 2.0.61","hostname":"www.netbsd.org","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"os":"Apple AirPort Extreme WAP (runs NetBSD)","scripts":{"HTML title":"The NetBSD Project"}}},{"type":"port","target":"example.com","ip":"204.152.190.12","port":443,"protocol":"tcp","state":"open","service":"http","version":"Apache httpd 2.0.61","hostname":"www.netbsd.org","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"os":"Apple AirPort Extreme WAP (runs NetBSD)","scripts":{"HTML title":"400 Bad Request","SSLv2":"server still supports SSLv2\n\tSSL2_DES_192_EDE3_CBC_WITH_MD5\n\tSSL2_IDEA_128_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_WITH_MD5\n\tSSL2_DES_64_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_EXPORT40_WITH_MD5\n"}}},{"type":"port","target":"example.com","ip":"72.14.207.99","port":80,"protocol":"tcp","state":"open","service":"http","version":"Google httpd 1.3","hostname":"eh-in-f99.google.com","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"scripts":{"HTML title":"302 Moved"}}},{"type":"port","target":"example.com","ip":"72.14.207.99","port":443,"protocol":"tcp","state":"open","service":"http","version":"Google httpd 1.3","hostname":"eh-in-f99.google.com","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"scripts":{"HTML title":"302 Moved","SSLv2":"server still supports SSLv2\n\tSSL2_DES_192_EDE3_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_WITH_MD5\n\tSSL2_DES_64_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_EXPORT40_WITH_MD5\n"}}},{"type":"port","target":"example.com","ip":"72.14.253.83","port":80,"protocol":"tcp","state":"open","service":"http","version":"Google httpd 1.3","hostname":"po-in-f83.google.com","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"scripts":{"HTML title":"302 Moved","robots.txt":"/news?output=xhtml\u0026 /search /groups /images \n/catalogs /catalogues /news /nwshp /? /addurl/image? \n/pagead/ /relpage/ /relcontent /sorry/ /imgres \n/keyword/ /u/ /univ/ /cobrand /custom \n/advanced_group_search /advanced_search /googlesite /preferences \n/setprefs /swr /url /default /m? /m/search? /wml? \n/wml/search? /xhtml? /xhtml/search? /xml? /imode? \n/imode/search? /jsky? /jsky/search? /pda? /pda/search? \n/sprint_xhtml /sprint_wml /pqa /palm /gwt/ /purchases /hws \n/bsd? /linux? /mac? /microsoft? /unclesam? \n/answers/search?q= /local? /local_url /froogle? /products? \n/froogle_ /product_ /products_ /print /books /patents? \n/scholar? /complete /sponsoredlinks /videosearch? \n/videopreview? /videoprograminfo? /maps? /mapstt? /mapslt? \n/translate? /ie? /sms/demo? /katrina? /blogsearch? \n/blogsearch/ /blogsearch_feeds /advanced_blog_search \n/reader/ /uds/ /chart? /transit? /mbd? /extern_js/ \n/calendar/feeds/ /calendar/ical/ /cl2/feeds/ /cl2/ical/ \n/coop/directory /coop/manage /trends? /trends/music? \n/notebook/search? /music /browsersync /call /archivesearch? \n/archivesearch/url /archivesearch/advanced_search \n/base/search? /base/reportbadoffer /base/s2 \n/urchin_test/ /movies? /codesearch? \n/codesearch/feeds/search? /wapsearch? /safebrowsing /reviews/search? \n/orkut/albums /jsapi /views? /c/ /cbk \n/recharge/dashboard/car /recharge/dashboard/static/ /translate_c? \n/s2 /transconsole/portal/ /gcc/ /aclk /cse? \n/tbproxy/ "}}},{"type":"port","target":"example.com","ip":"72.14.253.83","port":443,"protocol":"tcp","state":"open","service":"https","hostname":"po-in-f83.google.com","first_seen":"2026-06-18T22:42:35.2025067Z","last_seen":"2026-06-18T22:42:35.2025067Z","source":"nmap","extra":{"scripts":{"HTML title":"302 Moved","SSLv2":"server still supports SSLv2\n\tSSL2_DES_192_EDE3_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_WITH_MD5\n\tSSL2_DES_64_CBC_WITH_MD5\n\tSSL2_RC2_CBC_128_CBC_WITH_MD5\n\tSSL2_RC4_128_EXPORT40_WITH_MD5\n"}}}];
+        
+        // 1. Process Data for Charts
+        const sevCounts = { critical:0, high:0, medium:0, low:0, info:0, unknown:0 };
+        const typeCounts = {};
+
+        rawFindings.forEach(f => {
+            const sev = (f.severity || 'unknown').toLowerCase();
+            if(sevCounts[sev] !== undefined) sevCounts[sev]++;
+            else sevCounts['unknown']++;
+
+            const type = f.type || 'unknown';
+            typeCounts[type] = (typeCounts[type] || 0) + 1;
+        });
+
+        // 2. Render Severity Chart (Doughnut)
+        const ctxSev = document.getElementById('severityChart').getContext('2d');
+        new Chart(ctxSev, {
+            type: 'doughnut',
+            data: {
+                labels: ['Critical', 'High', 'Medium', 'Low', 'Info', 'Unknown'],
+                datasets: [{
+                    data: [sevCounts.critical, sevCounts.high, sevCounts.medium, sevCounts.low, sevCounts.info, sevCounts.unknown],
+                    backgroundColor: ['#ef4444', '#f97316', '#eab308', '#3b82f6', '#22c55e', '#94a3b8'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { color: '#f8fafc' } }
+                }
+            }
+        });
+
+        // 3. Render Type Chart (Bar)
+        const ctxType = document.getElementById('typeChart').getContext('2d');
+        new Chart(ctxType, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(typeCounts),
+                datasets: [{
+                    label: 'Count',
+                    data: Object.values(typeCounts),
+                    backgroundColor: '#38bdf8',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // 4. Render Table
+        const tbody = document.getElementById('tableBody');
+        
+        function renderTable(data) {
+            tbody.innerHTML = '';
+            data.forEach(f => {
+                const tr = document.createElement('tr');
+                
+                // Severity Badge
+                const sev = (f.severity || 'unknown').toLowerCase();
+                const sevClass = sevCounts[sev] !== undefined ? sev : 'unknown';
+                
+                // Target
+                const target = f.url || f.ip || f.hostname || f.target || '-';
+                
+                // Port
+                const port = f.port ? f.port + '/' + (f.protocol||'tcp') : '-';
+
+                // Name/Service
+                const name = f.name || f.service || f.vuln_id || '-';
+
+                tr.innerHTML = '<td><span class="badge ' + sevClass + '">' + sev + '</span></td>' +
+                               '<td style="text-transform: uppercase; font-size:0.85rem;">' + (f.type || '-') + '</td>' +
+                               '<td>' + target + '</td>' +
+                               '<td>' + port + '</td>' +
+                               '<td>' + name + '</td>';
+                tbody.appendChild(tr);
+            });
+        }
+
+        renderTable(rawFindings);
+
+        // 5. Client-side Search
+        function filterTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = rawFindings.filter(f => {
+                return JSON.stringify(f).toLowerCase().includes(query);
+            });
+            renderTable(filtered);
+        }
+    </script>
+</body>
+</html>

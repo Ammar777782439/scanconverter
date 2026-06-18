@@ -2,15 +2,24 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"os"
 
 	"github.com/Ammar777782439/scanconverter/pkg/converter"
+	"github.com/Ammar777782439/scanconverter/pkg/export"
 	"github.com/Ammar777782439/scanconverter/pkg/schema"
 )
 
 func main() {
+	htmlOut := flag.String("html", "", "Output path for the Premium HTML Report")
+	flag.Parse()
+
+	inputFile := "./rich_nmap.xml"
+	if flag.NArg() > 0 {
+		inputFile = flag.Arg(0)
+	}
 	// 1) Load schemas
 	reg := schema.NewRegistry(nil)
 	if err := reg.LoadDir("./schemas"); err != nil {
@@ -19,10 +28,10 @@ func main() {
 
 	conv := converter.NewConverter(reg)
 
-	// 2) Read Nmap file
-	raw, err := os.ReadFile("./rich_nmap.xml")
+	// 2) Read input file
+	raw, err := os.ReadFile(inputFile)
 	if err != nil {
-		log.Fatal("read rich_nmap.xml:", err)
+		log.Fatalf("read file %s: %v", inputFile, err)
 	}
 
 	// 3) Convert without any filter
@@ -86,7 +95,19 @@ func main() {
 		fmt.Printf("  Findings By Type: %v\n", res.Summary.FindingsByType)
 	}
 
-	// 6) Save all as JSON
+	// 6) Export HTML Report if requested
+	if *htmlOut != "" {
+		htmlExporter := export.NewHTMLExporter()
+		htmlBytes, err := htmlExporter.Export(res)
+		if err != nil {
+			log.Printf("Failed to generate HTML report: %v", err)
+		} else {
+			_ = os.WriteFile(*htmlOut, htmlBytes, 0644)
+			fmt.Printf("\n✨ Premium HTML Report saved to: %s\n", *htmlOut)
+		}
+	}
+
+	// 7) Save all as JSON
 	out, _ := json.MarshalIndent(res, "", "  ")
 	_ = os.WriteFile("nmap_all.json", out, 0644)
 	fmt.Println("\n[+] Saved all results to: nmap_all.json")
