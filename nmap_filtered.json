@@ -1,0 +1,45 @@
+{
+  "id": "1781817469405879600",
+  "job_id": "job-nmap-001",
+  "tool": "nmap",
+  "target": "example.com",
+  "timestamp": "2026-06-18T21:17:49.4058796Z",
+  "status": "success",
+  "findings": [
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "93.184.216.34",
+      "port": 80,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "http",
+      "version": "Apache httpd 2.4.41",
+      "first_seen": "2026-06-18T21:17:49.4058796Z",
+      "last_seen": "2026-06-18T21:17:49.4058796Z",
+      "source": "nmap"
+    },
+    {
+      "type": "port",
+      "target": "example.com",
+      "ip": "93.184.216.34",
+      "port": 443,
+      "protocol": "tcp",
+      "state": "open",
+      "service": "https",
+      "version": "nginx 1.18.0",
+      "first_seen": "2026-06-18T21:17:49.4058796Z",
+      "last_seen": "2026-06-18T21:17:49.4058796Z",
+      "source": "nmap"
+    }
+  ],
+  "summary": {
+    "total_targets": 1,
+    "total_findings": 2,
+    "findings_by_type": {
+      "port": 2
+    },
+    "findings_by_severity": {},
+    "ports_open": 2
+  }
+}

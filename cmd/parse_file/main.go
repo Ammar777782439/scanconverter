@@ -1,67 +1,56 @@
 package main
 
 import (
-	"flag"
-	"fmt"
-	"log"
-	"os"
+    "encoding/json"
+    "fmt"
+    "log"
+    "os"
 
-	"go.uber.org/zap"
-
-	"github.com/Ammar777782439/scanconverter/pkg/converter"
-	"github.com/Ammar777782439/scanconverter/pkg/schema"
+    "github.com/Ammar777782439/scanconverter/pkg/converter"
+    "github.com/Ammar777782439/scanconverter/pkg/filter"
+    "github.com/Ammar777782439/scanconverter/pkg/models"
+    "github.com/Ammar777782439/scanconverter/pkg/schema"
 )
 
 func main() {
-	toolName := flag.String("tool", "", "Name of the tool (e.g., nmap, nuclei, masscan)")
-	filePath := flag.String("file", "", "Path to the scan output file to parse")
-	flag.Parse()
+    // 1) تحميل السكيمات
+    reg := schema.NewRegistry(nil)
+    if err := reg.LoadDir("./schemas"); err != nil {
+        log.Fatal("load schemas:", err)
+    }
 
-	if *toolName == "" || *filePath == "" {
-		fmt.Println("Usage: go run main.go -tool <tool_name> -file <path_to_file>")
-		fmt.Println("Example: go run main.go -tool nmap -file scan.xml")
-		os.Exit(1)
-	}
+    conv := converter.NewConverter(reg)
 
-	// 1. Initialize Logger
-	logger, err := zap.NewDevelopment()
-	if err != nil {
-		log.Fatalf("logger init: %v", err)
-	}
-	defer logger.Sync()
+    // 2) قراءة nmap XML (الملف اللي أرسلته mock_nmap.xml)
+    raw, err := os.ReadFile("././mock_nmap.xml")
+    if err != nil {
+        log.Fatal("read mock_nmap.xml:", err)
+    }
 
-	// 2. Initialize Registry & Load Schemas
-	reg := schema.NewRegistry(logger)
-	if err := reg.LoadDir("schemas"); err != nil {
-		logger.Warn("Failed to load schemas. Continuing anyway...", zap.Error(err))
-	} else {
-		logger.Info("Schemas loaded successfully")
-	}
+    // 3) تحويل
+    res, err := conv.Convert("nmap", raw, "example.com", "job-nmap-001")
+    if err != nil {
+        log.Println("convert warning:", err)
+    }
 
-	// 3. Read the scan output file
-	raw, err := os.ReadFile(*filePath)
-	if err != nil {
-		logger.Fatal("Failed to read file", zap.Error(err))
-	}
+    fmt.Printf("قبل الفلترة: %d findings\n", len(res.Findings))
 
-	// 4. Initialize Converter
-	conv := converter.NewConverter(reg, converter.WithLogger(logger))
+    // 4) فلترة – مثال: خذ فقط منافذ 80 و443
+    chain := filter.NewFilterChain().
+        AddRule(filter.ByTypes(models.TypePort)).   // تأكد إنه نوع port
+        AddRule(filter.ByPorts(80, 443))            // فقط البورت 80 و 443
 
-	// 5. Convert the file!
-	logger.Info("Starting conversion...", zap.String("tool", *toolName), zap.String("file", *filePath))
-	result, err := conv.Convert(*toolName, raw, "example-target.com", "job-12345")
-	if err != nil {
-		logger.Fatal("Conversion failed", zap.Error(err))
-	}
+    filtered := chain.Apply(res)
 
-	// 6. Print the unified summary and JSON output
-	logger.Info("Conversion complete!", zap.Int("findings_count", len(result.Findings)))
-	
-	jsonOutput, err := result.ToJSON()
-	if err != nil {
-		logger.Fatal("Failed to convert result to JSON", zap.Error(err))
-	}
+    fmt.Printf("بعد الفلترة: %d findings\n\n", len(filtered.Findings))
 
-	fmt.Println("\n--- Normalized Output ---")
-	fmt.Println(string(jsonOutput))
+    for i, f := range filtered.Findings {
+        fmt.Printf("[%d] %s:%d/%s state=%s service=%s version=%s\n",
+            i+1, f.IP, f.Port, f.Protocol, f.State, f.Service, f.Version)
+    }
+
+    // 5) حفظ الناتج بعد الفلترة
+    out, _ := json.MarshalIndent(filtered, "", "  ")
+    _ = os.WriteFile("nmap_filtered.json", out, 0644)
+    fmt.Println("الناتج المحفوظ: nmap_filtered.json")
 }
